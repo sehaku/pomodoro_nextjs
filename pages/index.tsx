@@ -1,12 +1,17 @@
-import type { NextPage } from 'next'
-import { Heading } from '@chakra-ui/react'
-import Head from 'next/head'
-import Image from 'next/image'
-import styles from '../styles/Home.module.css'
-
+import type { NextPage } from "next";
+import { Heading } from "@chakra-ui/react";
+import Head from "next/head";
+import Image from "next/image";
+import styles from "../styles/Home.module.css";
+import Header from "./components/Header";
+import Settings from "./components/Settings";
 const Home: NextPage = () => {
   return (
+    <>
+      <Header />
       <Heading color="red.400">Hello, nextjs</Heading>
+      <Settings />
+    </>
     // <div className={styles.container}>
     //   <Head>
     //     <title>Create Next App</title>
@@ -68,7 +73,7 @@ const Home: NextPage = () => {
     //     </a>
     //   </footer>
     // </div>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;
