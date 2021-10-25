@@ -8,12 +8,7 @@ const Settings: NextPage = () => {
       <IconButton
         aria-label="Search database"
         _focus={{ boxShadow: "none" }}
-        icon={<SettingsIcon w={100} h={100} />}
-        w={100}
-        h={100}
-        p={10}
-        display={"flex"}
-        ml={"auto"}
+        icon={<SettingsIcon/>}
       />
     </>
   );
