@@ -1,10 +1,10 @@
-import type { NextPage } from "next";
 import { Heading } from "@chakra-ui/react";
-import { useColorModeValue } from "@chakra-ui/color-mode";
-const Header: NextPage = () => {
+import { Dispatch, SetStateAction } from "react";
+
+const Header = () => {
   return (
-    <Heading as={"h6"} color={useColorModeValue("red.400", "green")}>
-      Hello, nextjs
+    <Heading textAlign="center" as={"h6"}>
+      Pomodoro Timer
     </Heading>
   );
 };
