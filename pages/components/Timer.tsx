@@ -2,16 +2,26 @@ import type { NextPage } from "next";
 import { useTimer } from "react-timer-hook";
 const Timer: NextPage = () => {
   const time = new Date();
-  time.setSeconds(time.getSeconds() + 600000);
-  return <TimerUI expiryTimestamp={time as Date} />;
+  time.setSeconds(time.getSeconds() + 1500);
+  return <TimerUI expiryTimestamp={time as Date}/>;
 };
 
-const TimerUI = ({ expiryTimestamp }: { expiryTimestamp: Date }) => {
-  const { seconds, minutes, hours, isRunning, start, pause, resume, restart } =
-    useTimer({
-      expiryTimestamp,
-      onExpire: () => console.warn("Error : onExpire called"),
-    });
+const TimerUI = (
+  { expiryTimestamp }: { expiryTimestamp: Date },
+) => {
+  const {
+    seconds,
+    minutes,
+    hours,
+    isRunning,
+    pause,
+    resume,
+    restart,
+  } = useTimer({
+    autoStart: false,
+    expiryTimestamp,
+    onExpire: () => console.warn("Error : onExpire called"),
+  });
   return (
     // TODO : chakra-ui style needs to be applied.
     <div style={{ textAlign: "center" }}>
