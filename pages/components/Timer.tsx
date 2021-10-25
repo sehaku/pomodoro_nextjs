@@ -1,0 +1,44 @@
+import type { NextPage } from "next";
+import { useTimer } from "react-timer-hook";
+const Timer: NextPage = () => {
+  const time = new Date();
+  time.setSeconds(time.getSeconds() + 600000);
+  return <TimerUI expiryTimestamp={time as Date} />;
+};
+
+const TimerUI = ({ expiryTimestamp }: { expiryTimestamp: Date }) => {
+  const { seconds, minutes, hours, isRunning, start, pause, resume, restart } =
+    useTimer({
+      expiryTimestamp,
+      onExpire: () => console.warn("Error : onExpire called"),
+    });
+  return (
+    // TODO : chakra-ui style needs to be applied.
+    <div style={{ textAlign: "center" }}>
+      <h1>react-timer-hook </h1>
+      <p>Timer Demo</p>
+      <div style={{ fontSize: "100px" }}>
+        <span style={{ display: hours === 0 ? "none" : "" }}>
+          {hours.toString().padStart(2, "0")}:
+        </span>
+        <span>{minutes.toString().padStart(2, "0")}</span>:
+        <span>{seconds.toString().padStart(2, "0")}</span>
+      </div>
+      <p>{isRunning ? "Running" : "Not running"}</p>
+      <button onClick={resume}>Resume</button>
+      <button onClick={pause}>Pause</button>
+      <button
+        onClick={() => {
+          // Restarts to 5 minutes timer
+          const time = new Date();
+          time.setSeconds(time.getSeconds() + 300);
+          restart(time);
+          pause();
+        }}
+      >
+        Restart
+      </button>
+    </div>
+  );
+};
+export default Timer;
