@@ -1,6 +1,5 @@
-import type { NextPage } from "next";
 import { useTimer } from "react-timer-hook";
-const Timer: NextPage = () => {
+const Timer = () => {
   const time = new Date();
   time.setSeconds(time.getSeconds() + 1500);
   return <TimerUI expiryTimestamp={time as Date}/>;
