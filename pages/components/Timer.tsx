@@ -35,8 +35,8 @@ const TimerUI = (
         <span>{seconds.toString().padStart(2, "0")}</span>
       </div>
       <p>{isRunning ? "Running" : "Not running"}</p>
-      <button onClick={resume}>Resume</button>
-      <button onClick={pause}>Pause</button>
+      <button disabled={isRunning} onClick={resume}>Resume</button>
+      <button disabled={!isRunning} onClick={pause}>Pause</button>
       <button
         onClick={() => {
           // Restarts to 5 minutes timer
