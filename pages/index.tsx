@@ -1,16 +1,28 @@
 import type { NextPage } from "next";
-import { Heading } from "@chakra-ui/react";
+import {
+  Heading,
+  IconButton,
+  useColorMode,
+} from "@chakra-ui/react";
+import { MoonIcon, SunIcon } from "@chakra-ui/icons";
+
 import Head from "next/head";
 import Image from "next/image";
 import styles from "../styles/Home.module.css";
 import Header from "./components/Header";
 import Settings from "./components/Settings";
 const Home: NextPage = () => {
+  const { colorMode, toggleColorMode } = useColorMode();
   return (
     <>
       <Header />
       <Heading color="red.400">Hello, nextjs</Heading>
       <Settings />
+      <IconButton
+        aria-label="DarkMode switch"
+        icon={colorMode === "light" ? <MoonIcon /> : <SunIcon />}
+        onClick={toggleColorMode}
+      />
     </>
     // <div className={styles.container}>
     //   <Head>
