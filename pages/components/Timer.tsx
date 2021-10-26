@@ -1,20 +1,14 @@
-import { SettingsIcon } from "@chakra-ui/icons";
-import { Dispatch, MutableRefObject, SetStateAction } from "react";
-import { useTimer } from "react-timer-hook";
-import TimerUI from "./TimerUI"
+import { useRecoilValue } from "recoil";
+import { timerState } from "../states/timerState";
+import TimerUI from "./TimerUI";
 
-type Props = {
-  isSettingChange: boolean;
-  setIsSettingChange: Dispatch<SetStateAction<boolean>>;
-};
-const Timer = (props: Props) => {
+const Timer = () => {
   const time = new Date();
-  time.setSeconds(time.getSeconds() + 1500);
+  const minDuration = useRecoilValue(timerState);
+  time.setSeconds(time.getSeconds() + minDuration * 60);
   return (
     <TimerUI
       expiryTimestamp={time}
-      isSettingChange={props.isSettingChange}
-      setIsSettingChange={props.setIsSettingChange}
     />
   );
 };

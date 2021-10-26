@@ -1,26 +1,32 @@
-import { Dispatch, SetStateAction, useRef } from "react";
 import { useTimer } from "react-timer-hook";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { timerState } from "../states/timerState";
+import { setting } from "../states/setting";
 
 type Props = {
-  isSettingChange: boolean;
-  setIsSettingChange: Dispatch<SetStateAction<boolean>>;
   expiryTimestamp: Date;
 };
 const TimerUI = (props: Props) => {
   const expiryTimestamp = props.expiryTimestamp;
-  const duration = useRef(300);
+  const minDuration = useRecoilValue(timerState);
+  const [isSettingChange, setIsSettingChange] = useRecoilState(setting);
   const { seconds, minutes, hours, isRunning, pause, resume, restart } =
     useTimer({
       autoStart: false,
       expiryTimestamp,
       onExpire: () => console.warn("Error : onExpire called"),
     });
-  if (props.isSettingChange === true) {
-    props.setIsSettingChange(false);
+  if (isSettingChange === true) {
+    setIsSettingChange(false);
     console.log("true");
-    duration.current = 500;
     // restart(time);
   }
+  // if (props.isSettingChange === true) {
+  //   props.setIsSettingChange(false);
+  //   console.log("true");
+  //   setDuration(8);
+  //   // restart(time);
+  // }
   return (
     // TODO : chakra-ui style needs to be applied.
     <div style={{ textAlign: "center" }}>
@@ -44,7 +50,7 @@ const TimerUI = (props: Props) => {
         onClick={() => {
           // Restarts to 5 minutes timer
           const time = new Date();
-          time.setSeconds(time.getSeconds() + duration.current);
+          time.setSeconds(time.getSeconds() + minDuration * 60);
           restart(time);
           pause();
         }}

@@ -5,13 +5,9 @@ import { MoonIcon, SunIcon } from "@chakra-ui/icons";
 import Header from "./components/Header";
 import Settings from "./components/Settings";
 import Timer from "./components/Timer";
-import { useRef, useState } from "react";
 const Home: NextPage = () => {
   const { colorMode, toggleColorMode } = useColorMode();
-  const [isSettingChange, setIsSettingChange] = useState(false);
-  if (isSettingChange === false) {
-    console.log('false')
-  }
+
   return (
     <>
       <Header />
@@ -22,15 +18,9 @@ const Home: NextPage = () => {
           isRound={true}
           onClick={toggleColorMode}
         />
-        <Settings
-          isSettingChange={isSettingChange}
-          setIsSettingChange={setIsSettingChange}
-        />
+        <Settings />
       </Flex>
-      <Timer
-        isSettingChange={isSettingChange}
-        setIsSettingChange={setIsSettingChange}
-      />
+      <Timer />
     </>
   );
 };
