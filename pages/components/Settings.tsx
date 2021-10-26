@@ -10,16 +10,24 @@ import {
   ModalCloseButton,
   Button,
   useDisclosure,
+  NumberInput,
+  NumberInputField,
+  NumberIncrementStepper,
+  NumberInputStepper,
+  NumberDecrementStepper,
+  Box,
+  Grid,
 } from "@chakra-ui/react";
-import { Dispatch, MutableRefObject, SetStateAction } from "react";
+import { useRecoilState } from "recoil";
+import { timerState } from "../states/timerState";
+import { setting } from "../states/setting";
+import { useState } from "react";
 
-type Props = {
-  isSettingChange: boolean;
-  setIsSettingChange: Dispatch<SetStateAction<boolean>>;
-};
-
-const Settings = (props: Props) => {
+const Settings = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const [isSettingChange, setIsSettingChange] = useRecoilState(setting);
+  const [duration, setDuration] = useRecoilState(timerState);
+  const [tmpMin, setTmpMin] = useState(duration);
   return (
     <>
       <IconButton
@@ -32,30 +40,63 @@ const Settings = (props: Props) => {
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Modal Title</ModalHeader>
+          <ModalHeader>Settings</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            Sit nulla est ex deserunt exercitation anim occaecat. Nostrud
-            ullamco deserunt aute id consequat veniam incididunt duis in sint
-            irure nisi. Mollit officia cillum Lorem ullamco minim nostrud elit
-            officia tempor esse quis. Sunt ad dolore quis aute consequat. Magna
-            exercitation reprehenderit magna aute tempor cupidatat consequat
-            elit dolor adipisicing. Mollit dolor eiusmod sunt ex incididunt
-            cillum quis. Velit duis sit officia eiusmod Lorem aliqua enim
-            laboris do dolor eiusmod. Et mollit incididunt nisi consectetur esse
-            laborum eiusmod pariatur proident Lorem eiusmod et. Culpa deserunt
-            nostrud ad veniam.
+            <Box textAlign="center">Time length (min)</Box>
+            <Grid templateColumns="repeat(3, 1fr)">
+              <Box textAlign="center">Pomodoro</Box>
+              <Box textAlign="center">Break</Box>
+              <Box textAlign="center">Long Break</Box>
+            </Grid>
+            <Grid templateColumns="repeat(3, 1fr)" gap={1}>
+              <NumberInput
+                onChange={(value) => {
+                  if (!isNaN(Number(value))) {
+                    setTmpMin(Number(value));
+                  }
+                }}
+                value={tmpMin}
+                defaultValue={tmpMin}
+                min={1}
+                max={59}
+              >
+                <NumberInputField />
+                <NumberInputStepper>
+                  <NumberIncrementStepper />
+                  <NumberDecrementStepper />
+                </NumberInputStepper>
+              </NumberInput>
+              <NumberInput defaultValue={5} min={1} max={59}>
+                <NumberInputField />
+                <NumberInputStepper>
+                  <NumberIncrementStepper />
+                  <NumberDecrementStepper />
+                </NumberInputStepper>
+              </NumberInput>
+              <NumberInput defaultValue={15} min={1} max={59}>
+                <NumberInputField />
+                <NumberInputStepper>
+                  <NumberIncrementStepper />
+                  <NumberDecrementStepper />
+                </NumberInputStepper>
+              </NumberInput>
+            </Grid>
           </ModalBody>
           <ModalFooter>
             <Button colorScheme="blue" mr={3} onClick={onClose}>
               Close
             </Button>
-            <Button colorScheme="yellow" mr={3} onClick={() => {
-              props.setIsSettingChange(true);
-            }}>
+            <Button
+              colorScheme="yellow"
+              mr={3}
+              onClick={() => {
+                setIsSettingChange(true);
+                setDuration(tmpMin);
+              }}
+            >
               Apply
             </Button>
-            <Button variant="ghost">Secondary Action</Button>
           </ModalFooter>
         </ModalContent>
       </Modal>
