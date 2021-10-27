@@ -2,6 +2,8 @@ import { useTimer } from "react-timer-hook";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { timerState } from "../states/timerState";
 import { setting } from "../states/setting";
+import { useEffect, useState } from "react";
+import { isPomodoroState, pomodoroCount } from "../states/pomodoro";
 
 type Props = {
   expiryTimestamp: Date;
@@ -10,23 +12,32 @@ const TimerUI = (props: Props) => {
   const expiryTimestamp = props.expiryTimestamp;
   const minDuration = useRecoilValue(timerState);
   const [isSettingChange, setIsSettingChange] = useRecoilState(setting);
+  const [isPomodoro, setIsPomodoro] = useRecoilState(isPomodoroState);
+  const [count, setCount] = useRecoilState(pomodoroCount);
   const { seconds, minutes, hours, isRunning, pause, resume, restart } =
     useTimer({
-      autoStart: false,
+      // autoStart: false,
       expiryTimestamp,
-      onExpire: () => console.warn("Error : onExpire called"),
+      onExpire: () => {
+        const newCur = !isPomodoro;
+        const newCnt = isPomodoro ? count + 1 : count;
+        setIsPomodoro(newCur);
+        setCount(newCnt);
+        const time = new Date();
+        time.setSeconds(
+          newCur
+            ? time.getSeconds() + minDuration * 60
+            : newCnt % 4 == 0
+            ? time.getSeconds() + 3 * 60
+            : time.getSeconds() + 2 * 60
+        );
+        restart(time);
+      },
     });
   if (isSettingChange === true) {
     setIsSettingChange(false);
     console.log("true");
-    // restart(time);
   }
-  // if (props.isSettingChange === true) {
-  //   props.setIsSettingChange(false);
-  //   console.log("true");
-  //   setDuration(8);
-  //   // restart(time);
-  // }
   return (
     // TODO : chakra-ui style needs to be applied.
     <div style={{ textAlign: "center" }}>
@@ -52,7 +63,6 @@ const TimerUI = (props: Props) => {
           const time = new Date();
           time.setSeconds(time.getSeconds() + minDuration * 60);
           restart(time);
-          pause();
         }}
       >
         Restart
