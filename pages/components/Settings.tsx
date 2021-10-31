@@ -19,8 +19,8 @@ import {
   Grid,
 } from "@chakra-ui/react";
 import { useRecoilState } from "recoil";
-import { timerState } from "../states/timerState";
-import { setting } from "../states/setting";
+import { timerState } from "../../states/timerState";
+import { setting } from "../../states/setting";
 import { useState } from "react";
 
 const Settings = () => {

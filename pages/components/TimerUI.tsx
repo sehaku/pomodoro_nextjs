@@ -1,9 +1,10 @@
 import { useTimer } from "react-timer-hook";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { timerState } from "../states/timerState";
-import { setting } from "../states/setting";
+import { timerState } from "../../states/timerState";
+import { setting } from "../../states/setting";
 import { useEffect, useState } from "react";
-import { isPomodoroState, pomodoroCount } from "../states/pomodoro";
+import { isPomodoroState } from "../../states/pomodoro";
+import { pomodoroCount } from "../../states/count";
 
 type Props = {
   expiryTimestamp: Date;
