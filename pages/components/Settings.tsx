@@ -19,7 +19,11 @@ import {
   Grid,
 } from "@chakra-ui/react";
 import { useRecoilState } from "recoil";
-import { timerState } from "../../states/timerState";
+import {
+  timerState,
+  breakState,
+  longBreakState,
+} from "../../states/timerState";
 import { setting } from "../../states/setting";
 import { useState } from "react";
 
@@ -27,7 +31,11 @@ const Settings = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [isSettingChange, setIsSettingChange] = useRecoilState(setting);
   const [duration, setDuration] = useRecoilState(timerState);
+  const [breakMin, setBreakMin] = useRecoilState(breakState)
+  const [longBreak, setLongBreak] = useRecoilState(longBreakState);
   const [tmpMin, setTmpMin] = useState(duration);
+  const [tmpBreakMin, setTmpBreakMin] = useState(breakMin);
+  const [tmpLongBreakMin, setTmpLongBreakMin] = useState(longBreak);
   return (
     <>
       <IconButton
@@ -67,14 +75,34 @@ const Settings = () => {
                   <NumberDecrementStepper />
                 </NumberInputStepper>
               </NumberInput>
-              <NumberInput defaultValue={5} min={1} max={59}>
+              <NumberInput
+                onChange={(value) => {
+                  if (!isNaN(Number(value))) {
+                    setTmpBreakMin(Number(value));
+                  }
+                }}
+                value={tmpBreakMin}
+                defaultValue={tmpBreakMin}
+                min={1}
+                max={59}
+              >
                 <NumberInputField />
                 <NumberInputStepper>
                   <NumberIncrementStepper />
                   <NumberDecrementStepper />
                 </NumberInputStepper>
               </NumberInput>
-              <NumberInput defaultValue={15} min={1} max={59}>
+              <NumberInput
+                onChange={(value) => {
+                  if (!isNaN(Number(value))) {
+                    setTmpLongBreakMin(Number(value));
+                  }
+                }}
+                value={tmpLongBreakMin}
+                defaultValue={tmpLongBreakMin}
+                min={1}
+                max={59}
+              >
                 <NumberInputField />
                 <NumberInputStepper>
                   <NumberIncrementStepper />
@@ -93,6 +121,8 @@ const Settings = () => {
               onClick={() => {
                 setIsSettingChange(true);
                 setDuration(tmpMin);
+                setBreakMin(breakMin);
+                setLongBreak(tmpLongBreakMin);
               }}
             >
               Apply
