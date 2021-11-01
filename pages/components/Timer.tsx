@@ -17,7 +17,7 @@ const Timer = () => {
   const [count, setCount] = useRecoilState(pomodoroCount);
   const [isRun, setIsRun] = useState(true);
   const [isPomodoro, setIsPomodoro] = useRecoilState(isPomodoroState);
-
+  const [progress, setProgress] = useState(0);
   const toggleIsPomodoro = (): boolean => {
     const newIsPomodoro = !isPomodoro;
     setIsPomodoro(newIsPomodoro);
@@ -35,20 +35,34 @@ const Timer = () => {
     return newCnt;
   };
 
-  const handleSetTime = (isPomodoro: boolean, count: number): void => {
+  const handleSetTime = (isPomodoro: boolean, count: number): number => {
     const time = isPomodoro
       ? minDuration // isPomodoro=true
       : count % 4 == 0 // isPomodoro=false
       ? longMinBreak // count % 4 == 0
       : minBreak; // count % 4 != 0
+    console.log(
+      "minDuration",
+      minDuration,
+      "minBreak",
+      minBreak,
+      "longMinBreak",
+      longMinBreak
+    );
+    console.log(time, isPomodoro);
     setTime(time);
+    return time;
   };
-
-  const handleEnd = (): void => {
+  const handleSetProgress = (v: number) => {
+    setProgress(v);
+  };
+  const handleEnd = (): number => {
+    console.log(isPomodoro ? "pomodoro" : "not pomodoro");
+    const newCount = handleCountUp(isPomodoro);
     const newIsPomodoro = toggleIsPomodoro();
-    const newCount = handleCountUp(newIsPomodoro);
-    handleSetTime(newIsPomodoro, newCount);
-    console.log("handle end");
+    console.log(newIsPomodoro ? "newpomodoro" : "not newpomodoro");
+    const time = handleSetTime(newIsPomodoro, newCount);
+    return time * 1000; // Convert millisecond to second (time: millisecond)
   };
 
   /**
@@ -62,9 +76,11 @@ const Timer = () => {
     <CountdownTimer
       duration={time * 1000} // Convert millisecond to second (time: millisecond)
       handleEnd={handleEnd}
+      handleSetProgress={handleSetProgress}
       handleSetIsRun={handleSetIsRun}
       isRun={isRun}
       isPomodoro={isPomodoro}
+      progress={progress}
     />
   );
 };
