@@ -1,10 +1,11 @@
 import type { NextPage } from "next";
 import { Heading, IconButton, useColorMode, Flex } from "@chakra-ui/react";
 import { MoonIcon, SunIcon } from "@chakra-ui/icons";
-
+import { CountdownCircleTimer } from "react-countdown-circle-timer";
 import Header from "./components/Header";
 import Settings from "./components/Settings";
 import Timer from "./components/Timer";
+
 const Home: NextPage = () => {
   const { colorMode, toggleColorMode } = useColorMode();
 
