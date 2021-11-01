@@ -33,6 +33,7 @@ const Settings = () => {
   const [duration, setDuration] = useRecoilState(timerState);
   const [breakMin, setBreakMin] = useRecoilState(breakState)
   const [longBreak, setLongBreak] = useRecoilState(longBreakState);
+
   const [tmpMin, setTmpMin] = useState(duration);
   const [tmpBreakMin, setTmpBreakMin] = useState(breakMin);
   const [tmpLongBreakMin, setTmpLongBreakMin] = useState(longBreak);
@@ -121,7 +122,7 @@ const Settings = () => {
               onClick={() => {
                 setIsSettingChange(true);
                 setDuration(tmpMin);
-                setBreakMin(breakMin);
+                setBreakMin(tmpBreakMin);
                 setLongBreak(tmpLongBreakMin);
               }}
             >
