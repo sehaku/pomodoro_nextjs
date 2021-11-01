@@ -10,8 +10,8 @@ import Countdown, {
 type Props = {
   duration: number;
   handleEnd: () => void;
-  handleSetIsPlay: (v: boolean) => void;
-  isPlay: boolean;
+  handleSetIsRun: (v: boolean) => void;
+  isRun: boolean;
   isPomodoro: boolean;
 };
 export default class CountdownTimer extends Component<Props, {}> {
@@ -20,19 +20,19 @@ export default class CountdownTimer extends Component<Props, {}> {
   handleStartClick = (): void => {
     console.log("start");
     this.countdownApi && this.countdownApi.start();
-    this.props.handleSetIsPlay(true);
+    this.props.handleSetIsRun(true);
   };
 
   handlePauseClick = (): void => {
     console.log("pause");
     this.countdownApi && this.countdownApi.pause();
-    this.props.handleSetIsPlay(false);
+    this.props.handleSetIsRun(false);
   };
 
   handleResetClick = (): void => {
     console.log("reset");
     this.setState({ date: Date.now() + this.props.duration });
-    this.props.handleSetIsPlay(true);
+    this.props.handleSetIsRun(true);
   };
 
   setRef = (countdown: Countdown | null): void => {
@@ -65,13 +65,13 @@ export default class CountdownTimer extends Component<Props, {}> {
         />
         <ButtonGroup spacing="3">
           <Button
-            display={this.props.isPlay ? "none" : ""}
+            display={this.props.isRun ? "none" : ""}
             onClick={this.handleStartClick}
           >
             Start
           </Button>
           <Button
-            display={this.props.isPlay ? "" : "none"}
+            display={this.props.isRun ? "" : "none"}
             onClick={this.handlePauseClick}
           >
             Pause
