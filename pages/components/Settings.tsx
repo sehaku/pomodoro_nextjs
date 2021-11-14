@@ -10,11 +10,6 @@ import {
   ModalCloseButton,
   Button,
   useDisclosure,
-  NumberInput,
-  NumberInputField,
-  NumberIncrementStepper,
-  NumberInputStepper,
-  NumberDecrementStepper,
   Box,
   Grid,
 } from "@chakra-ui/react";
@@ -24,14 +19,7 @@ import BreakMin from "./BreakMin";
 
 const Settings = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [isSettingChange, setIsSettingChange] = useRecoilState(setting);
-  const [duration, setDuration] = useRecoilState(timerState);
-  const [breakMin, setBreakMin] = useRecoilState(breakState)
-  const [longBreak, setLongBreak] = useRecoilState(longBreakState);
 
-  const [tmpMin, setTmpMin] = useState(duration);
-  const [tmpBreakMin, setTmpBreakMin] = useState(breakMin);
-  const [tmpLongBreakMin, setTmpLongBreakMin] = useState(longBreak);
   return (
     <>
       <IconButton
