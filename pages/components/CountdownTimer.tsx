@@ -11,10 +11,10 @@ import Countdown, {
 type Props = {
   duration: number;
   handleEnd: () => number;
+  handleReset: () => number;
   handleSetIsRun: (v: boolean) => void;
   isRun: boolean;
   isPomodoro: boolean;
-  progress: number;
 };
 export default class CountdownTimer extends Component<Props, {}> {
   autostart: boolean = false;
@@ -51,9 +51,18 @@ export default class CountdownTimer extends Component<Props, {}> {
 
   renderer = (render: CountdownRenderProps) => {
     return (
-      <Text fontSize="9xl">
-        {zeroPad(render.minutes, 2)}:{zeroPad(render.seconds, 2)}
-      </Text>
+      <>
+        {!this.props.isRun ? (
+          <Text fontSize="4xl">Timer Stop</Text>
+        ) : this.props.isPomodoro ? (
+          <Text fontSize="4xl">Pomodoro</Text>
+        ) : (
+          <Text fontSize="4xl">Break time...</Text>
+        )}
+        <Text fontSize="9xl">
+          {zeroPad(render.minutes, 2)}:{zeroPad(render.seconds, 2)}
+        </Text>
+      </>
     );
   };
   render() {

@@ -62,8 +62,11 @@ const Timer = () => {
     console.log(isPomodoro ? "pomodoro" : "not pomodoro");
     const newCount = handleCountUp(isPomodoro);
     const newIsPomodoro = toggleIsPomodoro();
-    console.log(newIsPomodoro ? "newpomodoro" : "not newpomodoro");
     const time = handleSetTime(newIsPomodoro, newCount);
+    return time * 1000; // Convert millisecond to second (time: millisecond)
+  };
+  const handleReset = (): number => {
+    const time = handleSetTime(isPomodoro, count);
     return time * 1000; // Convert millisecond to second (time: millisecond)
   };
 
@@ -78,7 +81,7 @@ const Timer = () => {
     <CountdownTimer
       duration={time * 1000} // Convert millisecond to second (time: millisecond)
       handleEnd={handleEnd}
-      handleSetProgress={handleSetProgress}
+      handleReset={handleReset}
       handleSetIsRun={handleSetIsRun}
       isRun={isRun}
       isPomodoro={isPomodoro}
