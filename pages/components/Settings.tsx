@@ -17,6 +17,8 @@ import PomodoroMin from "./PomodoroMin";
 import LongBreakMin from "./LongBreakMin";
 import BreakMin from "./BreakMin";
 
+import Volume from "./Volume";
+import MusicUpload from "./MusicUpload";
 const Settings = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -35,33 +37,25 @@ const Settings = () => {
           <ModalHeader>Settings</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            <Box textAlign="center">Time length (min)</Box>
-            <Grid templateColumns="repeat(3, 1fr)">
+            <Box marginBottom="1" textAlign="center">
+              Time length (min)
+            </Box>
+            <Grid marginBottom="1" templateColumns="repeat(3, 1fr)" gap={1}>
               <Box textAlign="center">Pomodoro</Box>
               <Box textAlign="center">Break</Box>
               <Box textAlign="center">Long Break</Box>
             </Grid>
-            <Grid templateColumns="repeat(3, 1fr)" gap={1}>
+            <Grid marginBottom="1" templateColumns="repeat(3, 1fr)" gap={1}>
               <PomodoroMin />
               <BreakMin />
               <LongBreakMin />
             </Grid>
+            <Volume />
+            <MusicUpload />
           </ModalBody>
           <ModalFooter>
             <Button colorScheme="blue" mr={3} onClick={onClose}>
               Close
-            </Button>
-            <Button
-              colorScheme="yellow"
-              mr={3}
-              onClick={() => {
-                setIsSettingChange(true);
-                setDuration(tmpMin);
-                setBreakMin(tmpBreakMin);
-                setLongBreak(tmpLongBreakMin);
-              }}
-            >
-              Apply
             </Button>
           </ModalFooter>
         </ModalContent>

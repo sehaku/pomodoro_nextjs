@@ -8,20 +8,31 @@ import {
 } from "../../states/timerState";
 import { isPomodoroState } from "../../states/pomodoro";
 import { pomodoroCount } from "../../states/count";
-import { useState } from "react";
-// import useSound from "use-sound";
-// import { alarm } from "../../alarm.mp3";
+import { useEffect, useState } from "react";
+import useSound from "use-sound";
+import { usrMusicState, volumeState } from "../../states/usrMusic";
 const Timer = () => {
+  const volume = useRecoilValue<number>(volumeState);
   const minDuration = useRecoilValue(timerState);
   const minBreak = useRecoilValue(breakState);
   const longMinBreak = useRecoilValue(longBreakState);
+  const usrMusic = useRecoilValue(usrMusicState);
   const [time, setTime] = useRecoilState(curTypeTime);
   const [count, setCount] = useRecoilState(pomodoroCount);
 
   const [isRun, setIsRun] = useState(false);
   const [isPomodoro, setIsPomodoro] = useRecoilState(isPomodoroState);
-  const [progress, setProgress] = useState(0);
-  // const [play] = useSound(alarm);
+
+  const [play] = useSound("music.mp3", {
+    interrupt: true,
+    volume: volume * 0.01,
+  });
+  useEffect(() => {
+    if (usrMusic) {
+      usrMusic.volume = volume * 0.01;
+    }
+  }, [usrMusic, volume]);
+
   const toggleIsPomodoro = (): boolean => {
     const newIsPomodoro = !isPomodoro;
     setIsPomodoro(newIsPomodoro);
@@ -58,8 +69,14 @@ const Timer = () => {
   };
 
   const handleEnd = (): number => {
-    // play();
-    console.log(isPomodoro ? "pomodoro" : "not pomodoro");
+    console.log(volume);
+    if (usrMusic) {
+      usrMusic?.pause();
+      usrMusic.currentTime = 0;
+      usrMusic.play();
+    } else {
+      play(); // Start the timer alarm.
+    }
     const newCount = handleCountUp(isPomodoro);
     const newIsPomodoro = toggleIsPomodoro();
     const time = handleSetTime(newIsPomodoro, newCount);
