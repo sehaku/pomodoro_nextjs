@@ -7,37 +7,34 @@ import Countdown, {
   CountdownRenderProps,
   zeroPad,
 } from "react-countdown";
-import { CircularProgress, CircularProgressLabel } from "@chakra-ui/react";
 
 type Props = {
   duration: number;
   handleEnd: () => number;
   handleSetIsRun: (v: boolean) => void;
-  handleSetProgress: (v: number) => void;
   isRun: boolean;
   isPomodoro: boolean;
   progress: number;
 };
 export default class CountdownTimer extends Component<Props, {}> {
+  autostart: boolean = false;
   countdownApi: CountdownApi | null = null;
   state = { date: Date.now() + this.props.duration };
   handleStartClick = (): void => {
-    console.log("start");
     this.countdownApi && this.countdownApi.start();
     this.props.handleSetIsRun(true);
   };
 
   handlePauseClick = (): void => {
-    console.log("pause");
     this.countdownApi && this.countdownApi.pause();
     this.props.handleSetIsRun(false);
   };
 
   handleResetClick = (): void => {
-    console.log("reset");
-    this.setState({ date: Date.now() + this.props.duration });
+    this.autostart = true;
+    const duration = this.props.handleReset();
+    this.setState({ date: Date.now() + duration });
     this.props.handleSetIsRun(true);
-    this.props.handleSetProgress(0);
   };
 
   setRef = (countdown: Countdown | null): void => {
@@ -47,17 +44,11 @@ export default class CountdownTimer extends Component<Props, {}> {
   };
 
   handleEnd = (): void => {
+    this.autostart = true;
     const duration = this.props.handleEnd();
     this.setState({ date: Date.now() + duration });
-    this.props.handleSetProgress(0);
   };
-  handleTick = () => {
-    console.log("tick");
-    this.props.handleSetProgress(this.props.progress + 1000);
-  };
-  // componentDidUpdate(render){
 
-  // }
   renderer = (render: CountdownRenderProps) => {
     return (
       <Text fontSize="9xl">
@@ -68,22 +59,15 @@ export default class CountdownTimer extends Component<Props, {}> {
   render() {
     return (
       <Flex alignItems="center" direction="column">
-        <CircularProgress
-          value={100 - (this.props.progress / this.props.duration) * 100}
-          size="2xl"
-        >
-          <CircularProgressLabel>
-            <Countdown
-              key={this.state.date}
-              ref={this.setRef}
-              date={this.state.date}
-              autoStart={true}
-              onComplete={this.handleEnd}
-              onTick={this.handleTick}
-              renderer={this.renderer}
-            />
-          </CircularProgressLabel>
-        </CircularProgress>
+        <Countdown
+          key={this.state.date}
+          ref={this.setRef}
+          date={this.state.date}
+          autoStart={this.autostart}
+          onComplete={this.handleEnd}
+          renderer={this.renderer}
+        />
+
         <ButtonGroup spacing="3">
           <Button
             display={this.props.isRun ? "none" : ""}

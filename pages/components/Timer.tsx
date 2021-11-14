@@ -17,7 +17,8 @@ const Timer = () => {
   const longMinBreak = useRecoilValue(longBreakState);
   const [time, setTime] = useRecoilState(curTypeTime);
   const [count, setCount] = useRecoilState(pomodoroCount);
-  const [isRun, setIsRun] = useState(true);
+
+  const [isRun, setIsRun] = useState(false);
   const [isPomodoro, setIsPomodoro] = useRecoilState(isPomodoroState);
   const [progress, setProgress] = useState(0);
   // const [play] = useSound(alarm);
@@ -41,9 +42,9 @@ const Timer = () => {
   const handleSetTime = (isPomodoro: boolean, count: number): number => {
     const time = isPomodoro
       ? minDuration // isPomodoro=true
-      : count % 4 == 0 // isPomodoro=false
-      ? longMinBreak // count % 4 == 0
-      : minBreak; // count % 4 != 0
+      : count % 4 == 0
+      ? longMinBreak // isPomodoro=false && count % 4 == 0
+      : minBreak; // isPomodoro=false && count % 4 != 0
     console.log(
       "minDuration",
       minDuration,
@@ -52,13 +53,10 @@ const Timer = () => {
       "longMinBreak",
       longMinBreak
     );
-    console.log(time, isPomodoro);
     setTime(time);
     return time;
   };
-  const handleSetProgress = (v: number) => {
-    setProgress(v);
-  };
+
   const handleEnd = (): number => {
     // play();
     console.log(isPomodoro ? "pomodoro" : "not pomodoro");
@@ -84,7 +82,6 @@ const Timer = () => {
       handleSetIsRun={handleSetIsRun}
       isRun={isRun}
       isPomodoro={isPomodoro}
-      progress={progress}
     />
   );
 };
