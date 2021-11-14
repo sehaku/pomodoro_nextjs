@@ -18,14 +18,9 @@ import {
   Box,
   Grid,
 } from "@chakra-ui/react";
-import { useRecoilState } from "recoil";
-import {
-  timerState,
-  breakState,
-  longBreakState,
-} from "../../states/timerState";
-import { setting } from "../../states/setting";
-import { useState } from "react";
+import PomodoroMin from "./PomodoroMin";
+import LongBreakMin from "./LongBreakMin";
+import BreakMin from "./BreakMin";
 
 const Settings = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -59,57 +54,9 @@ const Settings = () => {
               <Box textAlign="center">Long Break</Box>
             </Grid>
             <Grid templateColumns="repeat(3, 1fr)" gap={1}>
-              <NumberInput
-                onChange={(value) => {
-                  if (!isNaN(Number(value))) {
-                    setTmpMin(Number(value));
-                  }
-                }}
-                value={tmpMin}
-                defaultValue={tmpMin}
-                min={1}
-                max={59}
-              >
-                <NumberInputField />
-                <NumberInputStepper>
-                  <NumberIncrementStepper />
-                  <NumberDecrementStepper />
-                </NumberInputStepper>
-              </NumberInput>
-              <NumberInput
-                onChange={(value) => {
-                  if (!isNaN(Number(value))) {
-                    setTmpBreakMin(Number(value));
-                  }
-                }}
-                value={tmpBreakMin}
-                defaultValue={tmpBreakMin}
-                min={1}
-                max={59}
-              >
-                <NumberInputField />
-                <NumberInputStepper>
-                  <NumberIncrementStepper />
-                  <NumberDecrementStepper />
-                </NumberInputStepper>
-              </NumberInput>
-              <NumberInput
-                onChange={(value) => {
-                  if (!isNaN(Number(value))) {
-                    setTmpLongBreakMin(Number(value));
-                  }
-                }}
-                value={tmpLongBreakMin}
-                defaultValue={tmpLongBreakMin}
-                min={1}
-                max={59}
-              >
-                <NumberInputField />
-                <NumberInputStepper>
-                  <NumberIncrementStepper />
-                  <NumberDecrementStepper />
-                </NumberInputStepper>
-              </NumberInput>
+              <PomodoroMin />
+              <BreakMin />
+              <LongBreakMin />
             </Grid>
           </ModalBody>
           <ModalFooter>
