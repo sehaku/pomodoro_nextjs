@@ -22,3 +22,8 @@ export const isMuteState = atom({
     key: "isMuteState",
     default: false
 })
+
+export const fileTypeState = atom({
+    key: "fileTypeState",
+    default: defaultMusicFileType
+})

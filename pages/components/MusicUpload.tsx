@@ -4,6 +4,7 @@ import {
   usrMusicNameState,
   usrMusicSrcState,
   usrMusicState,
+  fileTypeState
 } from "../../states/usrMusic";
 import { IconButton, Input } from "@chakra-ui/react";
 import { FiFile } from "react-icons/fi";
@@ -15,6 +16,7 @@ const MusicUpload = () => {
   );
   const setUsrMusicName = useSetRecoilState<string>(usrMusicNameState);
   const setUsrMusicSrc = useSetRecoilState<string>(usrMusicSrcState);
+  const setFileType = useSetRecoilState<string>(fileTypeState);
   const onFileInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     console.log("onChange!");
     const file = event.target.files?.[0];
@@ -24,6 +26,11 @@ const MusicUpload = () => {
       return;
     }
     console.log(file.name);
+    const file_type = file.name.split(".").pop();
+    console.log("file_type", file_type, file, file.name);
+    if (file_type) {
+      setFileType(file_type);
+    }
     const src = window.URL.createObjectURL(file) + "#t=0.0,4.0";
     const audio = new Audio(src);
     setUsrMusic(audio);
