@@ -1,5 +1,5 @@
 import { ChangeEvent, useRef } from "react";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import {
   usrMusicNameState,
   usrMusicSrcState,
@@ -13,10 +13,8 @@ const MusicUpload = () => {
   const [usrMusic, setUsrMusic] = useRecoilState<HTMLAudioElement | null>(
     usrMusicState
   );
-  const [usrMusicName, setUsrMusicName] =
-    useRecoilState<string>(usrMusicNameState);
-  const [usrMusicSrc, setUsrMusicSrc] =
-    useRecoilState<string>(usrMusicSrcState);
+  const setUsrMusicName = useSetRecoilState<string>(usrMusicNameState);
+  const setUsrMusicSrc = useSetRecoilState<string>(usrMusicSrcState);
   const onFileInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     console.log("onChange!");
     const file = event.target.files?.[0];
@@ -30,9 +28,9 @@ const MusicUpload = () => {
     const audio = new Audio(src);
     setUsrMusic(audio);
     setUsrMusicName(file.name);
-    setUsrMusicSrc(src.substring(src.lastIndexOf("/") + 1));
+    setUsrMusicSrc(src);
     usrMusic?.pause();
-    console.log(audio, file.name);
+    console.log(audio, file.name, src);
     event.target.value = "";
   };
   const fileUpload = () => {

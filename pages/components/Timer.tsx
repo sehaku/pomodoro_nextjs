@@ -10,20 +10,29 @@ import { isPomodoroState } from "../../states/pomodoro";
 import { pomodoroCount } from "../../states/count";
 import { useEffect, useState } from "react";
 import useSound from "use-sound";
-import { usrMusicState, volumeState } from "../../states/usrMusic";
+import {
+  usrMusicNameState,
+  usrMusicSrcState,
+  usrMusicState,
+  volumeState,
+} from "../../states/usrMusic";
 const Timer = () => {
   const volume = useRecoilValue<number>(volumeState);
   const minDuration = useRecoilValue(timerState);
   const minBreak = useRecoilValue(breakState);
   const longMinBreak = useRecoilValue(longBreakState);
   const usrMusic = useRecoilValue(usrMusicState);
+  const usrMusicName = useRecoilValue(usrMusicNameState);
+  const usrMusicSrc = useRecoilValue(usrMusicSrcState);
+  const defaultMusicName = "music.mp3";
+  const [musicName, setMusicName] = useState(defaultMusicName);
   const [time, setTime] = useRecoilState(curTypeTime);
   const [count, setCount] = useRecoilState(pomodoroCount);
 
   const [isRun, setIsRun] = useState(false);
   const [isPomodoro, setIsPomodoro] = useRecoilState(isPomodoroState);
 
-  const [play] = useSound("music.mp3", {
+  const [play] = useSound(musicName, {
     interrupt: true,
     volume: volume * 0.01,
   });
@@ -32,7 +41,11 @@ const Timer = () => {
       usrMusic.volume = volume * 0.01;
     }
   }, [usrMusic, volume]);
-
+  useEffect(() => {
+    console.log("change", usrMusicName);
+    console.log("change2", usrMusicSrc);
+    setMusicName(usrMusicSrc);
+  }, [usrMusicName]);
   const toggleIsPomodoro = (): boolean => {
     const newIsPomodoro = !isPomodoro;
     setIsPomodoro(newIsPomodoro);
