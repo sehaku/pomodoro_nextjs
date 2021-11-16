@@ -1,4 +1,6 @@
 import { atom, RecoilState } from 'recoil'
+const defaultMusicPath = "./music.mp3"
+const defaultMusicFileType = "mp3"
 export const usrMusicState: RecoilState<any>  = atom({
     key: "usrMusicState",
     default: null
@@ -10,7 +12,7 @@ export const usrMusicNameState: RecoilState<string> = atom({
 })
 export const usrMusicSrcState: RecoilState<string> = atom({
     key: "usrMusicSrcState",
-    default: ""
+    default: defaultMusicPath
 })
 
 export const volumeState = atom({
