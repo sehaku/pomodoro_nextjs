@@ -1,10 +1,12 @@
-import type { NextPage } from 'next'
-import { Heading } from '@chakra-ui/react'
+import { Heading } from "@chakra-ui/react";
+import { Dispatch, SetStateAction } from "react";
 
-const Header: NextPage = () => {
+const Header = () => {
   return (
-      <Heading as={'h6'} color="red.400">Hello, nextjs</Heading>
-  )
-}
+    <Heading textAlign="center" as={"h6"}>
+      Pomodoro Timer
+    </Heading>
+  );
+};
 
-export default Header
+export default Header;

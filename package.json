@@ -3,15 +3,26 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev -p 5000",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
   },
   "dependencies": {
+    "eslint": "^7.32.0",
+    "eslint-config-next": "^12.0.2",
     "next": "11.1.2",
+    "next-pwa": "^5.4.0",
     "react": "17.0.2",
-    "react-dom": "17.0.2"
+    "react-countdown": "^2.3.2",
+    "react-countdown-clock": "^2.8.1",
+    "react-dom": "17.0.2",
+    "react-dropzone": "^11.4.2",
+    "react-hook-form": "^7.19.5",
+    "react-howler": "^5.2.0",
+    "react-icons": "^4.3.1",
+    "reactjs-popup": "^2.0.5",
+    "recoil": "^0.4.1"
   },
   "devDependencies": {
     "@chakra-ui/icons": "^1.0.16",
@@ -19,9 +30,12 @@
     "@emotion/react": "^11.5.0",
     "@emotion/styled": "^11.3.0",
     "@types/react": "17.0.32",
-    "eslint": "8.1.0",
-    "eslint-config-next": "11.1.2",
+    "@types/react-howler": "^3.7.3",
     "framer-motion": "^4.1.17",
-    "typescript": "4.4.4"
+    "lighthouse": "^8.5.1",
+    "react-countdown-circle-timer": "^2.5.4",
+    "react-timer-hook": "^3.0.5",
+    "typescript": "4.4.4",
+    "use-sound": "^4.0.1"
   }
 }
