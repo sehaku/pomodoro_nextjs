@@ -9,43 +9,40 @@ import {
 import { isPomodoroState } from "../../states/pomodoro";
 import { pomodoroCount } from "../../states/count";
 import { useEffect, useState } from "react";
-import useSound from "use-sound";
+import ReactHowler from "react-howler";
 import {
+  fileTypeState,
   usrMusicNameState,
   usrMusicSrcState,
   usrMusicState,
   volumeState,
 } from "../../states/usrMusic";
+import { useInterval } from "@chakra-ui/hooks";
 const Timer = () => {
   const volume = useRecoilValue<number>(volumeState);
   const minDuration = useRecoilValue(timerState);
   const minBreak = useRecoilValue(breakState);
   const longMinBreak = useRecoilValue(longBreakState);
-  const usrMusic = useRecoilValue(usrMusicState);
-  const usrMusicName = useRecoilValue(usrMusicNameState);
   const usrMusicSrc = useRecoilValue(usrMusicSrcState);
-  const defaultMusicName = "music.mp3";
-  const [musicName, setMusicName] = useState(defaultMusicName);
+  const fileType = useRecoilValue(fileTypeState);
+  const fileTypeArray = [fileType];
+  const [musicName, setMusicName] = useState(usrMusicSrc);
   const [time, setTime] = useRecoilState(curTypeTime);
   const [count, setCount] = useRecoilState(pomodoroCount);
 
   const [isRun, setIsRun] = useState(false);
   const [isPomodoro, setIsPomodoro] = useRecoilState(isPomodoroState);
-
-  const [play] = useSound(musicName, {
-    interrupt: true,
-    volume: volume * 0.01,
-  });
+  const [isPlaying, setIsPlaying] = useState(false);
+  let player: ReactHowler | null = null;
   useEffect(() => {
-    if (usrMusic) {
-      usrMusic.volume = volume * 0.01;
-    }
-  }, [usrMusic, volume]);
-  useEffect(() => {
-    console.log("change", usrMusicName);
-    console.log("change2", usrMusicSrc);
     setMusicName(usrMusicSrc);
-  }, [usrMusicName]);
+  }, [usrMusicSrc]);
+  useInterval(() => {
+    if (player?.seek() && player.seek() >= 4.0){
+      player.seek(0); // seek to 0ms of the alarm music
+      setIsPlaying(false); // Stop the timer alarm
+    }
+  },100)
   const toggleIsPomodoro = (): boolean => {
     const newIsPomodoro = !isPomodoro;
     setIsPomodoro(newIsPomodoro);
@@ -83,13 +80,7 @@ const Timer = () => {
 
   const handleEnd = (): number => {
     console.log(volume);
-    if (usrMusic) {
-      usrMusic?.pause();
-      usrMusic.currentTime = 0;
-      usrMusic.play();
-    } else {
-      play(); // Start the timer alarm.
-    }
+    setIsPlaying(true); // Start the timer alarm.
     const newCount = handleCountUp(isPomodoro);
     const newIsPomodoro = toggleIsPomodoro();
     const time = handleSetTime(newIsPomodoro, newCount);
@@ -108,14 +99,23 @@ const Timer = () => {
     setIsRun(v);
   };
   return (
-    <CountdownTimer
-      duration={time * 1000} // Convert millisecond to second (time: millisecond)
-      handleEnd={handleEnd}
-      handleReset={handleReset}
-      handleSetIsRun={handleSetIsRun}
-      isRun={isRun}
-      isPomodoro={isPomodoro}
-    />
+    <>
+      <ReactHowler
+        src={musicName}
+        playing={isPlaying}
+        format={fileTypeArray}
+        volume={volume * 0.01}
+        ref={(ref) => (player = ref)}
+      />
+      <CountdownTimer
+        duration={time * 1000} // Convert millisecond to second (time: millisecond)
+        handleEnd={handleEnd}
+        handleReset={handleReset}
+        handleSetIsRun={handleSetIsRun}
+        isRun={isRun}
+        isPomodoro={isPomodoro}
+      />
+    </>
   );
 };
 
