@@ -15,13 +15,9 @@
     "next-pwa": "^5.4.0",
     "react": "17.0.2",
     "react-countdown": "^2.3.2",
-    "react-countdown-clock": "^2.8.1",
     "react-dom": "17.0.2",
-    "react-dropzone": "^11.4.2",
-    "react-hook-form": "^7.19.5",
     "react-howler": "^5.2.0",
     "react-icons": "^4.3.1",
-    "reactjs-popup": "^2.0.5",
     "recoil": "^0.4.1"
   },
   "devDependencies": {
@@ -32,10 +28,6 @@
     "@types/react": "17.0.32",
     "@types/react-howler": "^3.7.3",
     "framer-motion": "^4.1.17",
-    "lighthouse": "^8.5.1",
-    "react-countdown-circle-timer": "^2.5.4",
-    "react-timer-hook": "^3.0.5",
-    "typescript": "4.4.4",
-    "use-sound": "^4.0.1"
+    "typescript": "4.4.4"
   }
 }
