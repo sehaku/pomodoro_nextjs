@@ -1,7 +1,6 @@
 import { ChangeEvent, useRef } from "react";
-import { useRecoilState, useSetRecoilState } from "recoil";
+import { useSetRecoilState } from "recoil";
 import {
-  usrMusicNameState,
   usrMusicSrcState,
   usrMusicState,
   fileTypeState,
@@ -11,10 +10,7 @@ import { FiFile } from "react-icons/fi";
 
 export const MusicUpload = () => {
   const inputRef = useRef<any>(null);
-  const [usrMusic, setUsrMusic] = useRecoilState<HTMLAudioElement | null>(
-    usrMusicState
-  );
-  const setUsrMusicName = useSetRecoilState<string>(usrMusicNameState);
+  const setUsrMusic = useSetRecoilState<HTMLAudioElement | null>(usrMusicState);
   const setUsrMusicSrc = useSetRecoilState<string>(usrMusicSrcState);
   const setFileType = useSetRecoilState<string>(fileTypeState);
   const onFileInputChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -31,12 +27,10 @@ export const MusicUpload = () => {
     if (file_type) {
       setFileType(file_type);
     }
-    const src = window.URL.createObjectURL(file) + "#t=0.0,4.0";
+    const src = window.URL.createObjectURL(file);
     const audio = new Audio(src);
     setUsrMusic(audio);
-    setUsrMusicName(file.name);
     setUsrMusicSrc(src);
-    usrMusic?.pause();
     console.log(audio, file.name, src);
     event.target.value = "";
   };

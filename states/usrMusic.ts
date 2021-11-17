@@ -6,10 +6,6 @@ export const usrMusicState: RecoilState<any>  = atom({
     default: null
 })
 
-export const usrMusicNameState: RecoilState<string> = atom({
-    key: "usrMusicNameState",
-    default: ""
-})
 export const usrMusicSrcState: RecoilState<string> = atom({
     key: "usrMusicSrcState",
     default: defaultMusicPath

@@ -12,9 +12,7 @@ import { useEffect, useState } from "react";
 import ReactHowler from "react-howler";
 import {
   fileTypeState,
-  usrMusicNameState,
   usrMusicSrcState,
-  usrMusicState,
   volumeState,
 } from "../../states/usrMusic";
 import { useInterval } from "@chakra-ui/hooks";
