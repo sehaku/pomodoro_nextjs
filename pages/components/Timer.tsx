@@ -18,7 +18,7 @@ import {
   volumeState,
 } from "../../states/usrMusic";
 import { useInterval } from "@chakra-ui/hooks";
-const Timer = () => {
+export const Timer = () => {
   const volume = useRecoilValue<number>(volumeState);
   const minDuration = useRecoilValue(timerState);
   const minBreak = useRecoilValue(breakState);
@@ -38,11 +38,11 @@ const Timer = () => {
     setMusicName(usrMusicSrc);
   }, [usrMusicSrc]);
   useInterval(() => {
-    if (player?.seek() && player.seek() >= 4.0){
+    if (player?.seek() && player.seek() >= 4.0) {
       player.seek(0); // seek to 0ms of the alarm music
       setIsPlaying(false); // Stop the timer alarm
     }
-  },100)
+  }, 100);
   const toggleIsPomodoro = (): boolean => {
     const newIsPomodoro = !isPomodoro;
     setIsPomodoro(newIsPomodoro);
@@ -118,5 +118,3 @@ const Timer = () => {
     </>
   );
 };
-
-export default Timer;

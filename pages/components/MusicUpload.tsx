@@ -4,12 +4,12 @@ import {
   usrMusicNameState,
   usrMusicSrcState,
   usrMusicState,
-  fileTypeState
+  fileTypeState,
 } from "../../states/usrMusic";
 import { IconButton, Input } from "@chakra-ui/react";
 import { FiFile } from "react-icons/fi";
 
-const MusicUpload = () => {
+export const MusicUpload = () => {
   const inputRef = useRef<any>(null);
   const [usrMusic, setUsrMusic] = useRecoilState<HTMLAudioElement | null>(
     usrMusicState
@@ -68,4 +68,3 @@ const MusicUpload = () => {
     </>
   );
 };
-export default MusicUpload;

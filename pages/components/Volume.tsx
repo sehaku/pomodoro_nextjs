@@ -11,7 +11,7 @@ import React, { useState } from "react";
 import { GoMute, GoUnmute } from "react-icons/go";
 import { useRecoilState } from "recoil";
 import { isMuteState, volumeState } from "../../states/usrMusic";
-const Volume = () => {
+export const Volume = () => {
   const [isMute, setIsMute] = useRecoilState<boolean>(isMuteState);
   const [volume, setVolume] = useRecoilState<number>(volumeState);
   const [prevVolume, setPrevVolume] = useState<number>(volume);
@@ -63,4 +63,3 @@ const Volume = () => {
     </>
   );
 };
-export default Volume;
