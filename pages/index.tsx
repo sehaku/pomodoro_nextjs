@@ -1,9 +1,9 @@
 import type { NextPage } from "next";
 import { IconButton, useColorMode, Flex, Container } from "@chakra-ui/react";
 import { MoonIcon, SunIcon } from "@chakra-ui/icons";
-import { Header } from "./components/Header";
-import { Settings } from "./components/Settings";
-import { Timer } from "./components/Timer";
+import Header from "./components/Header";
+import Settings from "./components/Settings";
+import Timer from "./components/Timer";
 import React from "react";
 
 const Home: NextPage = () => {
