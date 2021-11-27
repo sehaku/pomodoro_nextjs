@@ -13,13 +13,13 @@ import {
   Box,
   Grid,
 } from "@chakra-ui/react";
-import { PomodoroMin } from "./PomodoroMin";
-import { LongBreakMin } from "./LongBreakMin";
-import { BreakMin } from "./BreakMin";
+import PomodoroMin from "./PomodoroMin";
+import LongBreakMin from "./LongBreakMin";
+import BreakMin from "./BreakMin";
 
-import { Volume } from "./Volume";
-import { MusicUpload } from "./MusicUpload";
-export const Settings = () => {
+import Volume from "./Volume";
+import MusicUpload from "./MusicUpload";
+const Settings = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
@@ -63,3 +63,4 @@ export const Settings = () => {
     </>
   );
 };
+export default Settings;

@@ -9,7 +9,7 @@ type Props = {
   min: number;
   setMin: (num: number) => void;
 };
-export const SetTime = (props: Props) => {
+const SetTime = (props: Props) => {
   return (
     <NumberInput
       onChange={(dummy: string, num: number) => {
@@ -28,3 +28,4 @@ export const SetTime = (props: Props) => {
     </NumberInput>
   );
 };
+export default SetTime;

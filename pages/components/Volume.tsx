@@ -11,7 +11,7 @@ import React, { useState } from "react";
 import { GoMute, GoUnmute } from "react-icons/go";
 import { useRecoilState } from "recoil";
 import { isMuteState, volumeState } from "../../states/usrMusic";
-export const Volume = () => {
+const Volume = () => {
   const [isMute, setIsMute] = useRecoilState<boolean>(isMuteState);
   const [volume, setVolume] = useRecoilState<number>(volumeState);
   const [prevVolume, setPrevVolume] = useState<number>(volume);
@@ -28,7 +28,9 @@ export const Volume = () => {
   };
   return (
     <>
-      <Box marginBottom="1" textAlign="center">Volume</Box>
+      <Box marginBottom="1" textAlign="center">
+        Volume
+      </Box>
       <Flex marginBottom="1" gridGap="5">
         <IconButton
           aria-label="Set Volume"
@@ -63,3 +65,4 @@ export const Volume = () => {
     </>
   );
 };
+export default Volume;
