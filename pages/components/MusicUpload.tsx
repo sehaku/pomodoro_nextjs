@@ -8,7 +8,7 @@ import {
 import { IconButton, Input } from "@chakra-ui/react";
 import { FiFile } from "react-icons/fi";
 
-export const MusicUpload = () => {
+const MusicUpload = () => {
   const inputRef = useRef<any>(null);
   const setUsrMusic = useSetRecoilState<HTMLAudioElement | null>(usrMusicState);
   const setUsrMusicSrc = useSetRecoilState<string>(usrMusicSrcState);
@@ -62,3 +62,4 @@ export const MusicUpload = () => {
     </>
   );
 };
+export default MusicUpload;

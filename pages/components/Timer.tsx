@@ -16,7 +16,7 @@ import {
   volumeState,
 } from "../../states/usrMusic";
 import { useInterval } from "@chakra-ui/hooks";
-export const Timer = () => {
+const Timer = () => {
   const minDuration = useRecoilValue<number>(timerState);
   const minBreak = useRecoilValue<number>(breakState);
   const minLongBreak = useRecoilValue<number>(longBreakState);
@@ -106,3 +106,4 @@ export const Timer = () => {
     </>
   );
 };
+export default Timer;
