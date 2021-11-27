@@ -96,7 +96,7 @@ const Timer = () => {
         ref={(ref) => (player = ref)}
       />
       <CountdownTimer
-        duration={time * 1000} // Convert millisecond to second (time: millisecond)
+        duration={time * 1000 * 60} // Convert millisecond to minutes (time: millisecond)
         handleEnd={handleEnd}
         handleReset={handleReset}
         handleSetIsRun={handleSetIsRun}
